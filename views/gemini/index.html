@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>easymind</title>
+</head>
+<body>
+    
+    <header>
+        <section class="calendar-view" id="calendar-btn">
+            <svg xmlns="http://w3.org" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M5 20V8h14V6v14z"></path>
+                <path d="M7 11h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zm-8 4h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"></path>
+            </svg>
+            <hr>
+            <div class="shortcut"><p>⌥</p><p>+</p><p>C</p></div>
+        </section>
+
+        <section class="quick-remind" id="quick-add-btn">
+            <svg xmlns="http://w3.org" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4z"></path>
+                <path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"></path>
+            </svg>
+            <p>quick remind</p>
+            <p>|</p>
+            <div class="shortcut"><p>⌘</p><p>+</p><p>K</p></div>
+        </section>
+
+        <section class="close-view">
+            <svg xmlns="http://w3.org" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="m7.76 14.83-2.83 2.83 1.41 1.41 2.83-2.83 2.12-2.12.71-.71.71.71 1.41 1.42 3.54 3.53 1.41-1.41-3.53-3.54-1.42-1.41-.71-.71 5.66-5.66-1.41-1.41L12 10.59 6.34 4.93 4.93 6.34 10.59 12l-.71.71z"></path>
+            </svg>
+            <hr>
+            <p style="font-size:0.75rem; font-weight:700; color:var(--medium-grey);">ESC</p>
+        </section>
+    </header>
+
+    <main>
+        <div class="reminder-form-container">
+            <!-- QUESTION 1 -->
+            <section class="reminder-form active" data-step="1">
+                <div class="reminder-form-question-text">
+                    <div class="reminder-form-question-number"><h1>1.</h1></div>
+                    <div class="reminder-form-question"><h1>what would you like to be reminded for?</h1></div>
+                    <div class="reminder-form-sub-text"><p>(write whatever you want, our AI will clean it up!)</p></div>
+                </div>
+                <div class="reminder-form-text-input">           
+                    <svg xmlns="http://w3.org" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13 10h-2v3H8v2h3v3h2v-3h3v-2h-3z"></path>
+                        <path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M5 20V8h14V6v14z"></path>
+                    </svg>
+                    <input type="text" id="input-task" placeholder="Enter your reminder here..." autofocus>
+                </div>
+                <button class="enter-button shortcut"><h2>enter</h2></button>
+            </section>
+
+            <!-- QUESTION 2 -->
+            <section class="reminder-form" data-step="2">
+                <div class="reminder-form-question-text">
+                    <div class="reminder-form-question-number"><h1>2.</h1></div>
+                    <div class="reminder-form-question"><h1>when would you like to be reminded?</h1></div>
+                    <div class="reminder-form-sub-text"><p>(e.g., Tomorrow at 5 PM, Next Monday afternoon)</p></div>
+                </div>
+                <div class="reminder-form-text-input">           
+                    <svg xmlns="http://w3.org" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 13c0-4.88-4.12-9-9-9s-9 4.12-9 9 4.12 9 9 9 9-4.12 9-9m-9 7c-3.79 0-7-3.21-7-7s3.21-7 7-7 7 3.21 7 7-3.21 7-7 7"></path>
+                    </svg>
+                    <input type="text" id="input-time" placeholder="Date/Time criteria...">
+                </div>
+                <button class="enter-button shortcut"><h2>enter</h2></button>
+            </section>
+
+            <!-- SUCCESS SLIDE -->
+            <section class="reminder-form" data-step="3">
+                <div class="reminder-form-question-text">
+                    <div class="reminder-form-question-number"><h1>✓</h1></div>
+                    <div class="reminder-form-question"><h1>Reminder locked in successfully.</h1></div>
+                    <div class="reminder-form-sub-text"><p>You will be alerted 1 day prior, and 15 mins prior.</p></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <section class="made-with-love-section">
+            <p>made with </p>
+            <div class="love-from">
+                <svg xmlns="http://w3.org" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M5 20V8h14V6v14z"></path>
+                    <path d="m12.22 11.14-.22.22-.22-.22c-.86-.86-2.23-.86-3.1 0-.86.86-.86 2.21 0 3.07L12 17.5l3.32-3.29c.86-.86.86-2.21 0-3.07-.87-.86-2.23-.86-3.1 0"></path>
+                </svg>
+                <p>from </p>
+                <p class="signature">abishan</p>
+            </div>
+            <p>.</p>
+        </section>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
