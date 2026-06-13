@@ -150,9 +150,21 @@
     }
 
     .reminder-form-question-number {
-        align-self: flex-start;
+        font-size: 0.75rem;
 
-        color: var(--medium-grey);
+        align-self: flex-start;
+        margin-top: 0.45rem;
+
+        display: grid;
+        place-content: center;
+
+        width: 2.5rem;
+        aspect-ratio: 1 / 1;
+        border: 3px solid var(--accent);
+        border-radius: 5px;
+
+        background-color: var(--white);
+        color: var(--black);
     }
 
     .reminder-form {
@@ -201,6 +213,10 @@
 
             font-size: 1.25rem;
             width: 100%;
+        }
+
+        &:focus-within {
+            border-bottom: 2px solid var(--black);
         }
     }
 
