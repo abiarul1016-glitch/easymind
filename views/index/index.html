@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="index.css">
 
     <title>easymind</title>
+
+    <script src="script.js"></script>
 </head>
 <body>
     
@@ -165,7 +167,7 @@
             </section>
         </div>
 
-        <div class="reminder-form-wrapper hidden">
+        <div class="reminder-form-wrapper active">
             <section class="reminder-form-section">
     
                 <div class="reminder-form-question-number">
@@ -200,7 +202,7 @@
                             <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
                             fill="currentColor" viewBox="0 0 24 24" >
                             <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-                            <path d="M21 13c0-4.88-4.12-9-9-9s-9 4.12-9 9 4.12 9 9 9 9-4.12 9-9m-9 7c-3.79 0-7-3.21-7-7s3.21-7 7-7 7 3.21 7 7-3.21 7-7 7"></path><path d="M13 12V8h-2v6h6v-2zm5.7-9.71-.71.71-.71.71 1.51 1.5 1.5 1.5L21 6l.71-.71-1.51-1.5zM3.71 6.71l1.49-1.5 1.5-1.5L5.99 3l-.71-.71-1.49 1.5-1.5 1.5L3 6z"></path>
+                            <path d="M12 15c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4m0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2"></path><path d="M11.65 21.94a1.03 1.03 0 0 0 .7 0C12.7 21.81 21 18.61 21 11c0-4.96-4.04-9-9-9s-9 4.04-9 9c0 7.6 8.3 10.8 8.65 10.94M12 4c3.86 0 7 3.14 7 7 0 5.42-5.53 8.26-7 8.91-1.47-.66-7-3.5-7-8.91 0-3.86 3.14-7 7-7"></path>
                             </svg>
                             <input type="text" name="" id="" placeholder="location">
                         </div>
@@ -220,24 +222,34 @@
         </div>
 
         <div class="reminder-form-wrapper hidden">
-            <section class="reminder-form-section">
+            <section class="reminder-form-section-done">
 
                 <h1>Done!</h1>
                 
             </section>
         </div>
 
-        <div class="reminder-form-wrapper active">
+        <div class="reminder-form-wrapper hidden">
 
             <section class="reminder-form-final-message">
                 <h1>We'll remind you a day before and 15 minutes before for your OSAP submission, on Saturday June 16th!</h1>
     
                 <section class="reminder-form-options">
                     <button>
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                        fill="currentColor" viewBox="0 0 24 24" >
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4z"></path><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"></path>
+                        </svg>
                         <h2>add another reminder</h2>
                     </button>
                     
                     <button>
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                        fill="currentColor" viewBox="0 0 24 24" >
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8c.13 0 .26-.03.38-.08s.23-.12.33-.22l7-7c.09-.09.15-.19.2-.29l.03-.09c.03-.08.05-.17.05-.26 0-.02.01-.04.01-.06V6c0-1.1-.9-2-2-2m0 9h-6c-.55 0-1 .45-1 1v6H5V8h14z"></path>
+                        </svg>
                         <h2>view all reminders</h2>
                     </button>
                 </section>
