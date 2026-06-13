@@ -71,44 +71,180 @@
 
     <main>
 
-        <section class="reminder-form-section">
-
-            <div class="reminder-form-question-number">
-                <h1>1</h1>
-            </div>
-
-            <section class="reminder-form question-1">
-
-                <div class="reminder-form-question-text">
+        <div class="reminder-form-wrapper hidden">
+            <section class="reminder-form-section">
     
-                    <div class="reminder-form-question">
-                        <h1>what would you like to be reminded for?</h1>
-                    </div>
-    
-                    <div class="reminder-form-sub-text">
-                        <p>(write whatever you want, our AI will clean it up!)</p>
-                    </div>
+                <div class="reminder-form-question-number">
+                    <h1>1</h1>
                 </div>
     
-                <div class="reminder-form-text-input">           
-                    <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
-                    fill="currentColor" viewBox="0 0 24 24" >
-                    <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-                    <path d="M13 10h-2v3H8v2h3v3h2v-3h3v-2h-3z"></path><path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M5 20V8h14V6v14z"></path>
-                    </svg>
-                    <input type="text" name="" id="" placeholder="eg. Apply for OSAP by June 15th">
-                </div>
-                
-                <button class="enter-button shortcut">
-                    <h2>enter</h2>
-                    <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
-                    fill="currentColor" viewBox="0 0 24 24" >
-                    <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-                    <path d="M18 12c0 1.65-1.35 3-3 3H9v-3l-5 4 5 4v-3h6c2.76 0 5-2.24 5-5V4h-2z"></path>
-                    </svg>
-                </button>
+                <section class="reminder-form question-1">
+    
+                    <div class="reminder-form-question-text">
+        
+                        <div class="reminder-form-question">
+                            <h1>what would you like to be reminded for?</h1>
+                        </div>
+        
+                        <div class="reminder-form-sub-text">
+                            <p>(write whatever you want, our AI will clean it up!)</p>
+                        </div>
+                    </div>
+        
+                    <div class="reminder-form-text-input">           
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                        fill="currentColor" viewBox="0 0 24 24" >
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path d="M13 10h-2v3H8v2h3v3h2v-3h3v-2h-3z"></path><path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M5 20V8h14V6v14z"></path>
+                        </svg>
+                        <input type="text" name="" id="" placeholder="eg. Apply for OSAP by June 15th">
+                    </div>
+                    
+                    <button class="enter-button shortcut">
+                        <h2>enter</h2>
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                        fill="currentColor" viewBox="0 0 24 24" >
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path d="M18 12c0 1.65-1.35 3-3 3H9v-3l-5 4 5 4v-3h6c2.76 0 5-2.24 5-5V4h-2z"></path>
+                        </svg>
+                    </button>
+                </section>
             </section>
-        </section>
+        </div>
+
+        <div class="reminder-form-wrapper hidden">
+            <section class="reminder-form-section">
+    
+                <div class="reminder-form-question-number">
+                    <h1>2</h1>
+                </div>
+    
+                <section class="reminder-form question-2">
+    
+                    <div class="reminder-form-question-text">
+        
+                        <div class="reminder-form-question">
+                            <h1>when would you like to be reminded?</h1>
+                        </div>
+        
+                        <div class="reminder-form-sub-text">
+                            <p>(write the date, time, whatever, however you want—we got this!)</p>
+                        </div>
+                    </div>
+        
+                    <div class="reminder-form-multiple-inputs">
+                        <div class="reminder-form-text-input">           
+                            <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                            fill="currentColor" viewBox="0 0 24 24" >
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M5 20V8h14V6v14z"></path><path d="M12 13h5v5h-5z"></path>
+                            </svg>
+                            <input type="text" name="" id="" placeholder="Date: June 13">
+                        </div>
+
+                        <div class="reminder-form-text-input">           
+                            <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                            fill="currentColor" viewBox="0 0 24 24" >
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path d="M21 13c0-4.88-4.12-9-9-9s-9 4.12-9 9 4.12 9 9 9 9-4.12 9-9m-9 7c-3.79 0-7-3.21-7-7s3.21-7 7-7 7 3.21 7 7-3.21 7-7 7"></path><path d="M13 12V8h-2v6h6v-2zm5.7-9.71-.71.71-.71.71 1.51 1.5 1.5 1.5L21 6l.71-.71-1.51-1.5zM3.71 6.71l1.49-1.5 1.5-1.5L5.99 3l-.71-.71-1.49 1.5-1.5 1.5L3 6z"></path>
+                            </svg>
+                            <input type="text" name="" id="" placeholder="Time: 9 AM, 8:16 AM">
+                        </div>
+                    </div>
+
+                    
+                    <button class="enter-button shortcut">
+                        <h2>enter</h2>
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                        fill="currentColor" viewBox="0 0 24 24" >
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path d="M18 12c0 1.65-1.35 3-3 3H9v-3l-5 4 5 4v-3h6c2.76 0 5-2.24 5-5V4h-2z"></path>
+                        </svg>
+                    </button>
+                </section>
+            </section>
+        </div>
+
+        <div class="reminder-form-wrapper hidden">
+            <section class="reminder-form-section">
+    
+                <div class="reminder-form-question-number">
+                    <h1>3</h1>
+                </div>
+    
+                <section class="reminder-form question-3">
+    
+                    <div class="reminder-form-question-text">
+        
+                        <div class="reminder-form-question">
+                            <h1>would you possibly want to be reminded for or at a specific place?</h1>
+                        </div>
+        
+                        <div class="reminder-form-sub-text">
+                            <p>(Optional parameter, press enter to skip!)</p>
+                            <p><strong>For</strong>: reminder to go to said place <strong>At</strong>: Reminder is triggered once you reach this location)</p>
+                        </div>
+                    </div>
+        
+                    <div class="reminder-form-multiple-inputs">
+                        <div class="reminder-form-text-input">           
+                            <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                            fill="currentColor" viewBox="0 0 24 24" >
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M5 20V8h14V6v14z"></path><path d="M12 13h5v5h-5z"></path>
+                            </svg>
+                            <input type="text" name="" id="" placeholder="Date: June 13">
+                        </div>
+
+                        <div class="reminder-form-text-input">           
+                            <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                            fill="currentColor" viewBox="0 0 24 24" >
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path d="M21 13c0-4.88-4.12-9-9-9s-9 4.12-9 9 4.12 9 9 9 9-4.12 9-9m-9 7c-3.79 0-7-3.21-7-7s3.21-7 7-7 7 3.21 7 7-3.21 7-7 7"></path><path d="M13 12V8h-2v6h6v-2zm5.7-9.71-.71.71-.71.71 1.51 1.5 1.5 1.5L21 6l.71-.71-1.51-1.5zM3.71 6.71l1.49-1.5 1.5-1.5L5.99 3l-.71-.71-1.49 1.5-1.5 1.5L3 6z"></path>
+                            </svg>
+                            <input type="text" name="" id="" placeholder="location">
+                        </div>
+                    </div>
+
+                    
+                    <button class="enter-button shortcut">
+                        <h2>done!</h2>
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"  
+                        fill="currentColor" viewBox="0 0 24 24" >
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path d="M18 12c0 1.65-1.35 3-3 3H9v-3l-5 4 5 4v-3h6c2.76 0 5-2.24 5-5V4h-2z"></path>
+                        </svg>
+                    </button>
+                </section>
+            </section>
+        </div>
+
+        <div class="reminder-form-wrapper hidden">
+            <section class="reminder-form-section">
+
+                <h1>Done!</h1>
+                
+            </section>
+        </div>
+
+        <div class="reminder-form-wrapper active">
+
+            <section class="reminder-form-final-message">
+                <h1>We'll remind you a day before and 15 minutes before for your OSAP submission, on Saturday June 16th!</h1>
+    
+                <section class="reminder-form-options">
+                    <button>
+                        <h2>add another reminder</h2>
+                    </button>
+                    
+                    <button>
+                        <h2>view all reminders</h2>
+                    </button>
+                </section>
+            </section>
+
+        </div>
+
     </main>
 
     <footer>

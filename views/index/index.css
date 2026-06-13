@@ -123,6 +123,18 @@
         grid-area: main;
     }
 
+    .reminder-form-wrapper {
+        display: none;
+    }
+
+    .reminder-form-wrapper.active {
+        display: block;
+    }
+
+    .reminder-form-wrapper.hidden {
+        display: none;
+    }
+
 /* {% TEMPLATED %} */
 
 /* default main sizing + centering */
@@ -134,7 +146,7 @@
         display: grid;
     }
 
-    .reminder-form-section {
+    .reminder-form-wrapper {
         place-content: center;
 
         max-width: 80dvw;
@@ -142,6 +154,10 @@
 
         justify-content: center;
         align-items: center;
+
+    }
+
+    .reminder-form-section {
 
         display: flex;
         flex-direction: row;
@@ -191,6 +207,15 @@
         color: var(--medium-grey);
     }
 
+    .reminder-form-multiple-inputs {
+
+        width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+        gap: 5rem;
+    }
+
     .reminder-form-text-input {
   
         min-width: auto;
@@ -229,6 +254,18 @@
 
         background-color: var(--black);
         color: var(--white);
+    }
+
+    /* completion slide */
+    .reminder-form-final-message {
+        display: flex;
+        flex-direction: column;
+        gap: 4.5rem;
+
+        justify-content: center;
+        align-items: center;
+
+        text-align: center;
     }
 
 /* {% TEMPLATED %} */
