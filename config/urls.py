@@ -8,6 +8,9 @@ router = DefaultRouter()
 router.register("reminders", ReminderViewSet, basename="reminder")
 
 urlpatterns = [
+
+    path('', include('easymind.urls')),
+
     path("admin/", admin.site.urls),
     path('api/', include(router.urls)),
 

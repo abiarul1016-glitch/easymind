@@ -2,11 +2,12 @@ import json
 import logging
 
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.views.decorators.http import require_POST
-from rest_framework import viewsets, permissions
+from rest_framework import permissions, viewsets
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Reminder
@@ -17,23 +18,37 @@ logger = logging.getLogger(__name__)
 
 # ─── Reminder CRUD ────────────────────────────────────────────────────────────
 
+
 class ReminderViewSet(viewsets.ModelViewSet):
     """
     Standard CRUD for reminders.
     - Only returns the logged-in user's reminders.
     - Automatically assigns request.user on create (via HiddenField in serializer).
     """
+
     serializer_class = ReminderSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
-        return Reminder.objects.filter(user=self.request.user).order_by('date', 'time')
+        # For authenticated users, return only their reminders.
+        # For guests (demo), return all reminders so the frontend can show something.
+        if hasattr(self.request, "user") and self.request.user.is_authenticated:
+            return Reminder.objects.filter(user=self.request.user).order_by(
+                "date", "time"
+            )
+        return Reminder.objects.all().order_by("date", "time")
+
+
+@ensure_csrf_cookie
+def index(request):
+    return render(request, "easymind/app.html")
 
 
 # ─── Ollama AI Parse endpoint ─────────────────────────────────────────────────
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def ai_parse_reminder(request):
     """
     POST /api/ai/parse/
@@ -42,11 +57,33 @@ def ai_parse_reminder(request):
 
     Uses Ollama running locally. Falls back gracefully if Ollama is unavailable.
     """
-    text = request.data.get('text', '').strip()
+    # Accept either { "text": "..." } or the frontend style { messages: [{ role, content }] }
+    text = ""
+    if isinstance(request.data, dict):
+        text = request.data.get("text") or ""
+        if not text:
+            # try messages array
+            msgs = request.data.get("messages") or request.data.get("Messages")
+            if isinstance(msgs, (list, tuple)) and len(msgs) > 0:
+                # find user content or use first
+                content = None
+                for m in msgs:
+                    if (
+                        isinstance(m, dict)
+                        and m.get("role") == "user"
+                        and m.get("content")
+                    ):
+                        content = m.get("content")
+                        break
+                if not content and isinstance(msgs[0], dict):
+                    content = msgs[0].get("content")
+                text = (content or "").strip()
+
     if not text:
-        return Response({'error': 'text is required'}, status=400)
+        return Response({"error": "text is required"}, status=400)
 
     from datetime import date
+
     today_str = date.today().isoformat()
 
     prompt = f"""You are a reminder parser. Today is {today_str}.
@@ -62,67 +99,151 @@ Reply with ONLY the JSON object, no markdown, no explanation."""
 
     try:
         import ollama
+
         response = ollama.chat(
-            model='llama3.2',   # change to whichever model you have pulled
-            messages=[{'role': 'user', 'content': prompt}],
-            options={'temperature': 0}
+            model="qwen3.5:9b",
+            messages=[{"role": "user", "content": prompt}],
+            options={"temperature": 0},
+            think=False,
         )
-        raw = response['message']['content'].strip()
+        raw = response["message"]["content"].strip()
 
         # Strip markdown code fences if model adds them
-        if raw.startswith('```'):
-            raw = raw.split('```')[1]
-            if raw.startswith('json'):
-                raw = raw[4:]
+        if raw.startswith("```"):
+            parts = raw.split("```")
+            if len(parts) >= 2:
+                raw = parts[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
         raw = raw.strip()
 
-        parsed = json.loads(raw)
-        return Response({
-            'title':    parsed.get('title', text),
-            'date':     parsed.get('date') or None,
-            'time':     parsed.get('time') or None,
-            'location': parsed.get('location', ''),
-        })
+        # If the model returned a JSON object as text, return it as a string in content[0].text
+        try:
+            parsed = json.loads(raw)
+            return Response({"content": [{"text": json.dumps(parsed)}]})
+        except Exception:
+            return Response({"content": [{"text": raw}]})
 
     except ImportError:
-        logger.warning('ollama package not installed — pip install ollama')
-        return Response({'error': 'ollama not installed'}, status=503)
+        logger.warning("ollama package not installed — falling back to python parsing")
     except Exception as e:
-        logger.error(f'Ollama parse failed: {e}')
-        return Response({'error': str(e)}, status=503)
+        logger.error(f"Ollama parse failed: {e}")
+
+    # Python fallback using dateparser and regex heuristics
+    try:
+        import re
+
+        import dateparser
+
+        parsed_dt = dateparser.parse(text, settings={"PREFER_DATES_FROM": "future"})
+        parsed_date = (
+            parsed_dt.date().isoformat() if parsed_dt and parsed_dt.date() else None
+        )
+        parsed_time = None
+        if parsed_dt and parsed_dt.time():
+            parsed_time = parsed_dt.time().isoformat()
+
+        # simple location detection
+        loc_match = re.search(r"\b(?:at|@)\s+([A-Z][\w\s,.&'-]+)", text)
+        location = loc_match.group(1).strip() if loc_match else ""
+
+        # basic title cleanup: remove detected location and date phrases
+        title = text
+        if location:
+            title = re.sub(
+                r"\b(?:at|@)\s+%s" % re.escape(location), "", title, flags=re.I
+            )
+        # remove common words
+        title = re.sub(
+            r"\b(?:tomorrow|today|by|on|at)\b", "", title, flags=re.I
+        ).strip()
+
+        parsed_obj = {
+            "title": title or text,
+            "date": parsed_date,
+            "time": parsed_time,
+            "location": location or "",
+        }
+        return Response({"content": [{"text": json.dumps(parsed_obj)}]})
+    except Exception as e:
+        logger.error(f"Fallback parse failed: {e}")
+        return Response({"error": "parse failed"}, status=503)
 
 
 # ─── Ollama AI Polish endpoint ─────────────────────────────────────────────────
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def ai_polish_title(request):
     """
     POST /api/ai/polish/
-    Body: { "text": "apply for osap thingo by june" }
-    Returns: { "title": "Apply for OSAP by June 15" }
+    Accepts either `{ "text": "..." }` or the frontend style `{ messages: [{role, content}] }`.
+    Returns: `{ content: [ { text: "Cleaned title" } ] }` for frontend compatibility.
     """
-    text = request.data.get('text', '').strip()
+    # extract text from request
+    text = ""
+    if isinstance(request.data, dict):
+        text = (request.data.get("text") or "").strip()
+        if not text:
+            msgs = request.data.get("messages") or request.data.get("Messages")
+            if isinstance(msgs, (list, tuple)) and len(msgs) > 0:
+                content = None
+                for m in msgs:
+                    if (
+                        isinstance(m, dict)
+                        and m.get("role") == "user"
+                        and m.get("content")
+                    ):
+                        content = m.get("content")
+                        break
+                if not content and isinstance(msgs[0], dict):
+                    content = msgs[0].get("content")
+                text = (content or "").strip()
+
     if not text:
-        return Response({'error': 'text is required'}, status=400)
+        return Response({"error": "text is required"}, status=400)
 
-    prompt = f"""Clean up this reminder title. Make it concise, clear, and action-oriented.
-Return ONLY the cleaned title — no quotes, no explanation, max 10 words.
-
-Raw text: {text}"""
+    prompt = f"Clean up this reminder title. Make it concise, clear, and action-oriented. Return ONLY the cleaned title — no quotes, no explanation, max 10 words.\n\nRaw text: {text}"
 
     try:
         import ollama
+
         response = ollama.chat(
-            model='llama3.2',
-            messages=[{'role': 'user', 'content': prompt}],
-            options={'temperature': 0}
+            model="qwen3.5:9b",
+            messages=[{"role": "user", "content": prompt}],
+            options={"temperature": 0},
+            think=False,
         )
-        title = response['message']['content'].strip().strip('"').strip("'")
-        return Response({'title': title})
+        raw = response["message"]["content"].strip()
+        # strip fences
+        if raw.startswith("```"):
+            parts = raw.split("```")
+            if len(parts) >= 2:
+                raw = parts[1]
+        title = raw.strip().strip('"').strip("'")
+        return Response({"content": [{"text": title}]})
 
     except ImportError:
-        return Response({'title': text})   # graceful fallback: return as-is
+        logger.warning("ollama package not installed — falling back to simple polish")
     except Exception as e:
-        logger.error(f'Ollama polish failed: {e}')
-        return Response({'title': text})   # graceful fallback
+        logger.error(f"Ollama polish failed: {e}")
+
+    # Simple python fallback: small heuristic cleaner
+    try:
+        cleaned = " ".join(
+            [
+                w
+                for w in text.split()
+                if w.lower() not in ("a", "the", "for", "to", "my", "your", "please")
+            ]
+        )
+        cleaned = cleaned.strip()
+        # limit to 10 words
+        cleaned = " ".join(cleaned.split()[:10])
+        if not cleaned:
+            cleaned = text
+        return Response({"content": [{"text": cleaned}]})
+    except Exception as e:
+        logger.error(f"Fallback polish failed: {e}")
+        return Response({"content": [{"text": text}]})

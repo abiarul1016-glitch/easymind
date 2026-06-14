@@ -214,17 +214,25 @@ function friendlyDate(isoDate) {
 
 
 /* ─── DJANGO REST API ─────────────────────────────────────── */
+function getCSRFToken() {
+  return getCookie('csrftoken') || document.querySelector('meta[name="csrf-token"]')?.content || '';
+}
+
 async function saveReminder(payload) {
   try {
     const res = await fetch(API_BASE, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCSRFToken(),
       },
       body: JSON.stringify(payload),
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) {
+      const text = await res.text();
+      console.error('Save reminder failed:', res.status, text);
+      throw new Error(`HTTP ${res.status}`);
+    }
     return await res.json();
   } catch (err) {
     console.error('Save reminder failed:', err);
@@ -300,6 +308,7 @@ async function handleQ3() {
   const atVal  = q3AtInput()?.value?.trim();
   state.location = atVal || forVal || '';
   state.forLocation = !!forVal && !atVal;
+  console.log('handleQ3: location=', state.location, 'forLocation=', state.forLocation);
   await submitAndFinish();
 }
 
@@ -312,11 +321,13 @@ async function submitAndFinish() {
     location: state.location || '',
   };
 
+  console.log('submitAndFinish: payload=', payload);
   // Show "Done!" flash
   exitAndShow(3);
 
   // Save to Django
   const saved = await saveReminder(payload);
+  console.log('submitAndFinish: save result=', saved);
 
   // Build confirmation message
   const msg = buildConfirmationMessage(payload, saved);
@@ -645,6 +656,7 @@ function playLoadAnimation() {
 
 /* ─── WIRE UP BUTTONS ────────────────────────────────────── */
 function initButtons() {
+  console.log('script.js: initButtons running');
   // Enter buttons on each step
   document.querySelector('.question-1 .enter-button')?.addEventListener('click', handleQ1);
   document.querySelector('.question-2 .enter-button')?.addEventListener('click', handleQ2);
@@ -864,6 +876,15 @@ document.addEventListener('DOMContentLoaded', () => {
   createQuickRemindOverlay();
   createSpeedControl();
   initButtons();
+  // expose state for debugging
+  try { window.state = state; } catch (e) { console.warn('could not expose state', e); }
+  // delegated click handler as a fallback if per-button listeners fail
+  document.addEventListener('click', (e) => {
+    if (e.target.closest && e.target.closest('.enter-button')) {
+      console.log('script.js: delegated enter-button click -> advanceCurrentStep');
+      advanceCurrentStep();
+    }
+  });
   initKeyboard();
 
   // Show first step after splash

@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "dateparser>=1.4.0",
     "django>=6.0.6",
     "django-cors-headers>=4.9.0",
     "djangorestframework>=3.17.1",
