@@ -1,6 +1,8 @@
 # Aisé
 
-> A lightweight reminders app with simple REST API and local AI parsing.
+**creating reminders shouldn't be the hard part.**
+
+![Aisé Homepage](assets/screenshots/homepage.png)
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
@@ -88,14 +90,9 @@ This repo currently uses a minimal local setup. If you add external services, ke
 - Deploy with Docker and add a production-grade DB and static file serving.
 - Add a small CI check that runs linters and basic tests.
 
----
+## NOTES
+- UI was completely me (Vanilla HTML and CSS)
+- Django REST framework was also me
+- Claude was used solely for the javascript, which will be done by me (it's trash) once I get home
 
-If you'd like, I can also:
 
-- add a `requirements.txt` or `pyproject.toml` entry that lists recommended packages
-- scaffold a `Dockerfile` and `docker-compose.yml` for local development
-- add basic unit tests for the parsing endpoints
-
-Happy to proceed — tell me which next step you'd like. 
-# Aisé
-a much simpler way to create reminders, offering much more peace of mind
