@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-4hschil0u^cu9s!bhcfwu5eqxb+u&mh2o11fz&i&0zh*#ccl(%
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.vercel.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.vercel.app', 'aise.abishan.xyz']
 
 
 # ─── Apps ─────────────────────────────────────────────────────────────────────
