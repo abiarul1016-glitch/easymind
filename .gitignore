@@ -216,3 +216,20 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# MINE
+# Sensitive files
+output_audios/
+reference_audios/
+system_prompts/
+
+draft_readme/
+assets/videos/
+
+# GITHUB STORAGE PURPOSES
+*.mp4
+*.wav
+
+# SECURITY
+*.json
+*.env

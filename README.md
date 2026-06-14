@@ -10,7 +10,11 @@
 
 ## What is Aisé?
 
-Aisé is a small Django-based reminders application that provides a clean REST API and a minimal frontend for creating, listing, and parsing reminders. It includes optional local LLM integration (via Ollama) to parse natural-language reminder text into structured reminder data (title, date, time, location).
+[![Prototype Demo](https://img.youtube.com/vi/iBecI4ypzVg/maxresdefault.jpg)](https://www.youtube.com/watch?v=iBecI4ypzVg)
+
+Inspired by the ease of use of TypeForms, and from a hatred of the disgusting Apple Calendar Event forms (sorry Apple, y'all been falling off), Aisé aims to be a useful way for users to quickly create reminders, so they can get to work, rather than waste time crafting the perfect reminder.
+
+It utilizes the Django REST framework and a frontend designed by the ground-up (by a human), in Vanilla HTML and CSS, for creating, listing, and parsing reminders. It includes optional local LLM integration (via Ollama) to parse natural-language reminder text into structured reminder data (title, date, time, location).
 
 ## Features
 
@@ -90,9 +94,10 @@ This repo currently uses a minimal local setup. If you add external services, ke
 - Deploy with Docker and add a production-grade DB and static file serving.
 - Add a small CI check that runs linters and basic tests.
 
-## NOTES
-- UI was completely me (Vanilla HTML and CSS)
-- Django REST framework was also me
-- Claude was used solely for the javascript, which will be done by me (it's trash) once I get home
+>[!NOTE]
+> - UI was completely me (Vanilla HTML and CSS)
+> - Django REST framework was also me
+> - Claude was used solely for the javascript, which will be done by me (it's trash) once I get home
+> - yes a lot of this README was generated as well 😭
 
 
