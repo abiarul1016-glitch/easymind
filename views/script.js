@@ -5,7 +5,7 @@
 
 /* ─── CONFIG ─────────────────────────────────────────────── */
 const API_BASE = 'http://127.0.0.1:8000/api/reminders/';   // Django REST endpoint
-const AI_ENABLED = false;              // toggle AI polishing
+const AI_ENABLED = true;              // toggle AI polishing
 
 /* ─── SPEED SETTINGS ─────────────────────────────────────── */
 const SPEEDS = {
@@ -204,7 +204,7 @@ function friendlyDate(isoDate) {
 async function aiPolish(rawText) {
   if (!AI_ENABLED) return rawText;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('http://127.0.0.1:8000/api/ai/polish/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -225,7 +225,7 @@ async function aiPolish(rawText) {
 
 async function aiParseQuickRemind(text) {
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('http://127.0.0.1:8000/api/ai/parse/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
