@@ -4,8 +4,8 @@
    ============================================================ */
 
 /* ─── CONFIG ─────────────────────────────────────────────── */
-const API_BASE = '/api/reminders/';   // Django REST endpoint
-const AI_ENABLED = true;              // toggle AI polishing
+const API_BASE = 'http://127.0.0.1:8000/api/reminders/';   // Django REST endpoint
+const AI_ENABLED = false;              // toggle AI polishing
 
 /* ─── SPEED SETTINGS ─────────────────────────────────────── */
 const SPEEDS = {
@@ -674,7 +674,7 @@ function handleClose() {
 function playLoadAnimation() {
   const splash = document.createElement('div');
   splash.id = 'load-splash';
-  splash.innerHTML = `<span class="load-logo">easymind</span>`;
+  splash.innerHTML = `<span class="load-logo">Aisé</span>`;
   document.body.appendChild(splash);
 
   // Force reflow then animate out
@@ -682,7 +682,7 @@ function playLoadAnimation() {
     splash.style.opacity = '0';
     splash.style.transform = 'scale(1.04)';
   }, 700);
-  setTimeout(() => splash.remove(), 1200);
+  setTimeout(() => splash.remove(), 4200);
 }
 
 /* ─── WIRE UP BUTTONS ────────────────────────────────────── */
